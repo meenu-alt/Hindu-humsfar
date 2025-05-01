@@ -1,0 +1,268 @@
+
+.hom-head{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    
+    height: 700px;
+    width: 100%;
+}
+.hom-head {
+    padding: 5% 0 0px 0;
+}
+.hom-head .banner-content{
+    padding-top: 70px;
+}
+.wedding-form{
+
+box-sizing: border-box;
+position: inherit;
+width: 559px;
+height: 574px;
+left: 781px;
+top:0px;
+background: rgba(255, 255, 255, 0.2);
+border: 1px solid #FFFFFF;
+box-shadow: 4px 4px 20px rgba(255, 255, 255, 0.25);
+backdrop-filter: blur(5px);
+border-radius: 25px;
+
+}
+.wedding-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wedding-form {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 33rem;
+}
+
+.form-label {
+    display: block;
+    color: white;
+    font-weight: 500;
+    font-size: 1.125rem;
+    margin-bottom: 0.60rem;
+}
+
+.form-section {
+    margin-bottom: 1.0rem;
+}
+
+.gender-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.gender-option {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px;
+    gap: 10px;
+    width: 45%;
+    height: auto;
+    color: #00000066;
+    background: #ffffff;
+    border: 1px solid #00000066;
+    border-radius: 8px;
+}
+
+.gender-option.selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px;
+    gap: 10px;
+    width: 45%;
+    height: auto;
+    color: #fff;
+    background: #E53D5C;
+    border-radius: 8px;
+}
+
+.hidden-radio {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-select.selected {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px;
+    gap: 10px;
+    width: 95%;
+    height: auto;
+    color: #e53d5c;
+    background: #ffffff;
+    border: 1px solid #e53d5c;
+    border-radius: 8px;
+}
+.form-select {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px;
+    gap: 10px;
+    width: 95%;
+    height: auto;
+    color: #00000066;
+    background: #ffffff;
+    border: 1px solid #00000066;
+    border-radius: 8px;
+}
+
+.form-select option {
+    color: black;
+}
+
+.age-display {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.age-slider-container {
+    position: relative;
+    height: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.age-slider-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(209, 213, 219, 0.3);
+    border-radius: 0.25rem;
+}
+
+.age-slider-range {
+    position: absolute;
+    height: 100%;
+    background-color: #E53D5C;
+    border-radius: 0.25rem;
+}
+
+.age-slider {
+    position: absolute;
+    width: 100%;
+    height: 0.5rem;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.age-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #E53D5C;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.age-marks {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #E53D5C;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #E53D5C;
+}
+.age-marks span{ 
+    color: #fff;
+}
+.age-display span{ 
+    color: #fff;
+}
+
+
+
+.header-container {
+    position: relative;
+  }
+  
+  .menu-toggle {
+    padding: 0.5rem 0.75rem;
+    font-size: 1.25rem;
+  }
+  
+  .mobile-menu {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    justify-content: center;
+    display: flex
+;
+}
+  
+
+
+  
+  .btn-signup:hover, .btn-login:hover {
+    opacity: 0.9;
+  }
+  
+
+  @media (max-width: 767.98px) {
+    .logo img {
+      max-height: 40px;
+    }
+    
+    .button-container .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: var(--swiper-pagination-bottom, 0px) !important;
+    left: 0;
+    width: 100%;
+}
+.swiper-pagination {
+    position: relative !important;
+    text-align: center;
+    transition: 300ms opacity;
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+}

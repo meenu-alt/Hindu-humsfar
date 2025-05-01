@@ -1,0 +1,342 @@
+@media (max-width: 575.98px) {
+  .menu-toggle i{
+    font-size: 30px !important;
+  }
+    .banner-content h1{
+    font-size:18px;
+    text-align: center;
+   }
+   .banner-content h3{
+    font-size: 16px ;
+    text-align: center;
+   }
+   .hom-head .banner-content {
+    padding-top: 30px;
+}
+.form-label {
+    font-size: 1.0rem;
+    margin-bottom: 0.50rem;
+}
+.gender-option {
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+  }
+  .gender-option{
+    font-size: 13px;
+  }
+  .gender-option.selected{
+  font-size: 13px;
+  }
+  .str  .submit-button{
+    font-size: 14px;
+  }
+  .wedding-form {
+    height: auto;
+    padding: 1rem;
+
+  }
+  .age-display {
+
+    color: white;
+    font-size: 1rem;}
+
+    .age-slider-container {
+        position: relative;
+        height: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .hom-head .banner-content {
+        padding: 40px 0;
+    }
+    .home-tit h3 {
+        position: relative;
+        display: inline-block;
+        font-size: 14px;
+    
+    }
+    .heading {
+        margin-bottom: 30px;
+    }
+    .home-tit{
+        padding-top: 30px;
+        margin-bottom: 0;
+    }
+    .comp-sec {
+        margin: 0 0 30px 0 !important;
+    }
+    h3{
+        font-size: 14px;
+    }
+    .register-box {
+        font-size: 13px;
+        padding: 12px 10px;
+
+    }
+    .straight-line {
+        width: 10px;
+        height: 40px !important;
+    }
+    .circle{
+        font-size: 13px;
+    }
+    p{
+        font-size: 13px !important;
+    }
+    .info-box{
+        font-size: 13px !important;
+    }
+    .card-content h4{
+        font-size: 12px !important;
+    }
+    .card-content{
+        padding: 8px !important;
+    }
+    .stat-item h4 {
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+   .love-numbers-section{
+    padding: 10px 0 !important;
+   }
+   .footer-logo {
+    width: 120px;
+    margin-bottom: 15px;
+    text-align: center;
+    justify-content: center;
+    display: inline-flex
+;}
+.social-icons{
+        vertical-align: middle;
+        margin-right: 10px !important;
+        font-size: 26px !important;
+        color: #E53D5C !important;
+    }
+    .footer-section h4 {
+        font-size: 14px !important;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    .footer-section ul li {
+        margin-bottom: 6px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    .footer-social svg{
+        vertical-align: middle;
+        margin-right: 25px;
+        text-align: center;
+        align-items: center;
+    }
+    .footer-top{
+        padding: 20px 20px;
+    }
+}
+  
+  @media (min-width: 576px) and (max-width: 767.98px) {
+
+    .card {
+      padding: 16px;
+    }
+    .banner-content h1{
+        font-size:18px;
+        text-align: center;
+       }
+       .banner-content h3{
+        font-size: 16px ;
+        text-align: center;
+       }
+       .hom-head .banner-content {
+        padding-top: 30px;
+    }
+    .form-label {
+        font-size: 1.0rem;
+        margin-bottom: 0.50rem;
+    }
+    .gender-option {
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+      }
+      .gender-option{
+        font-size: 13px;
+      }
+      .gender-option.selected{
+      font-size: 13px;
+      }
+      .str  .submit-button{
+        font-size: 14px;
+      }
+      .wedding-form {
+        height: auto;
+        padding: 1rem;
+    
+      }
+      .age-display {
+    
+        color: white;
+        font-size: 1rem;}
+    
+        .age-slider-container {
+            position: relative;
+            height: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .hom-head .banner-content {
+            padding: 40px 0;
+        }
+        .home-tit h3 {
+            position: relative;
+            display: inline-block;
+            font-size: 14px;
+        
+        }
+        .heading {
+            margin-bottom: 30px;
+        }
+        .home-tit{
+            padding-top: 30px;
+            margin-bottom: 0;
+        }
+        .comp-sec {
+            margin: 0 0 30px 0 !important;
+        }
+        h3{
+            font-size: 14px;
+        }
+        .register-box {
+            font-size: 13px;
+            padding: 12px 10px;
+    
+        }
+        .straight-line {
+            width: 10px;
+            height: 40px !important;
+        }
+        .circle{
+            font-size: 13px;
+        }
+        p{
+            font-size: 13px !important;
+        }
+        .info-box{
+            font-size: 13px !important;
+        }
+        .card-content h4{
+            font-size: 12px !important;
+        }
+        .card-content{
+            padding: 8px !important;
+        }
+        .stat-item h4 {
+            font-size: 13px !important;
+            font-weight: 600;
+        }
+       .love-numbers-section{
+        padding: 10px 0 !important;
+       }
+       .footer-logo {
+        width: 120px;
+        margin-bottom: 15px;
+        text-align: center;
+        justify-content: center;
+        display: inline-flex
+    ;}
+    .social-icons{
+            vertical-align: middle;
+            margin-right: 10px !important;
+            font-size: 26px !important;
+            color: #E53D5C !important;
+        }
+        .footer-section h4 {
+            font-size: 14px !important;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .footer-section ul li {
+            margin-bottom: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .footer-social svg{
+            vertical-align: middle;
+            margin-right: 25px;
+            text-align: center;
+            align-items: center;
+        }
+        .footer-top{
+            padding: 20px 20px;
+        }
+        
+       
+      
+  }
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .footer-section .footer-logo {
+        display: inline-flex
+    ;}
+    .hom-head .banner-content {
+        padding-top: 20px !important;
+    }
+    .banner-content h1{
+        text-align: center;
+        font-size: 22px;
+
+    }
+   
+    .banner-content h3{
+        text-align: center;
+        font-size: 16px;
+
+    }
+    .wedding-form {
+        padding: 1.5rem
+    }
+    .form-label {
+        font-size: 16px !important;
+        margin-bottom: 8px;
+    }    
+    .submit-button{
+        font-size: 16px !important;
+    }
+    .form-section {
+        margin-bottom: 10px;
+    }
+    .wedding-form{
+        height: auto;
+    }
+    .wedding-form-container {
+        margin-top: 20px;
+    }
+  }
+  
+
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    
+    .banner-content h1{
+        margin-bottom: 10px;
+       }
+       .social-icons{
+        vertical-align: middle;
+        margin-right: 10px !important;
+        font-size: 28px !important;
+        color: #E53D5C !important;
+    }
+  
+
+  }
+  
+  /* ✅ Extra large devices (large desktops, 1200px and up) */
+  @media (min-width: 1200px) {
+    /* Big screen styles */
+    h1 {
+      font-size: 2.5rem;
+    }
+    .social-icons{
+        vertical-align: middle;
+        margin-right: 13px !important;
+        font-size: 28px !important;
+        color: #E53D5C !important;
+    }
+  }

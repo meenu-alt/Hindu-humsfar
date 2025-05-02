@@ -1,5 +1,6 @@
 
 import { useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ScrollToTop from './Components/ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Components/home/index.js'
@@ -70,8 +71,10 @@ function App() {
     <Route path="terms-of-use" element={ <TermsOfUse/>  } />
     <Route path="how-to-use" element={ <HowToUse/>  } />
     <Route path="links" element={ <Links/>  } />
-    <Route path="blog" element={ <BlogPage/>  } />
-    <Route path="blog-post" element={ <BlogDetail/>  } />
+    {/* <Route path="blog" element={ <BlogPage/>  } />
+    <Route path="blog-post" element={ <BlogDetail/>  } /> */}
+    <Route path="blog" element={<BlogPage />} />
+        <Route path="blog/:id" element={<BlogDetail />} />
     <Route path="pricing" element={ <PricingPlanCard/>  } />
     </Routes>
     {/* <Footer/> */}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Button, Form, Card, Pagination } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaSearch } from 'react-icons/fa';
 
 const BlogPage = () => {
@@ -14,27 +15,26 @@ const BlogPage = () => {
   const fetchData = async (page = 1, search = "") => {
     setLoading(true);
     try {
-        const res = await axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`);
-        
-        // Check if the response is valid
-        if (res.data && Array.isArray(res.data)) {
-            const filteredBlogs = search
-                ? res.data.filter(blog =>
-                    blog.blog_name.toLowerCase().includes(search.toLowerCase()) ||
-                    blog.blog_keyword.toLowerCase().includes(search.toLowerCase()))
-                : res.data;
+      const res = await axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`);
 
-            setBlogs(filteredBlogs);
-            setTotalPages(Math.ceil(filteredBlogs.length / articlesPerPage));
-        } else {
-            console.error('Invalid response format:', res.data);
-        }
+      if (res.data && Array.isArray(res.data)) {
+        const filteredBlogs = search
+          ? res.data.filter(blog =>
+              blog.blog_name.toLowerCase().includes(search.toLowerCase()) ||
+              blog.blog_keyword.toLowerCase().includes(search.toLowerCase()))
+          : res.data;
+
+        setBlogs(filteredBlogs);
+        setTotalPages(Math.ceil(filteredBlogs.length / articlesPerPage));
+      } else {
+        console.error('Invalid response format:', res.data);
+      }
     } catch (error) {
-        console.error('Error fetching blogs:', error);
+      console.error('Error fetching blogs:', error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
   useEffect(() => {
     fetchData(currentPage, searchTerm);
@@ -46,21 +46,17 @@ const BlogPage = () => {
     fetchData(1, searchTerm);
   };
 
-  // Get featured blogs (first 4)
   const featuredBlogs = blogs.slice(0, 4);
-  
-  // Get paginated articles
   const startIndex = (currentPage - 1) * articlesPerPage;
   const paginatedArticles = blogs.slice(startIndex, startIndex + articlesPerPage);
 
-  // Format date
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
-    <Container className="blog-page py-5">
+    <div className="container blog-page py-5">
       <style>{`
         .blog-badge {
           display: inline-block;
@@ -140,6 +136,7 @@ const BlogPage = () => {
           border-radius: 10px;
           transition: 0.3s;
           height: 100%;
+          margin-bottom: 20px;
         }
         .article-card:hover {
           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -150,27 +147,52 @@ const BlogPage = () => {
           object-fit: cover;
           border-top-left-radius: 10px;
           border-top-right-radius: 10px;
+          width: 100%;
         }
-        .article-card .card-body {
+        .card-body {
+          padding: 15px;
           display: flex;
           flex-direction: column;
         }
-        .article-card .card-text {
+        .card-title {
+          font-size: 1.1rem;
+          margin-bottom: 10px;
+        }
+        .card-text {
           flex-grow: 1;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
+          color: #555;
+          font-size: 0.9rem;
+          margin-bottom: 15px;
         }
         .no-blogs {
           text-align: center;
           padding: 40px;
           color: #666;
         }
+        .read-more-btn {
+          margin-top: auto;
+          align-self: flex-start;
+          font-size: 0.8rem;
+          padding: 5px 10px;
+        }
+        .pagination {
+          justify-content: center;
+          margin-top: 30px;
+        }
+        .page-item.active .page-link {
+          background-color: #e53d5c;
+          border-color: #e53d5c;
+        }
+        .page-link {
+          color: #e53d5c;
+        }
       `}</style>
 
-      {/* Search Section */}
       <div className="text-center">
         <div className="blog-badge">Blog</div>
         <h3 className="blog-title">
@@ -181,46 +203,44 @@ const BlogPage = () => {
           Eu Fringilla
         </p>
 
-        <Form className="search-bar mx-auto my-4" onSubmit={handleSearchSubmit}>
+        <form className="search-bar mx-auto my-4" onSubmit={handleSearchSubmit}>
           <div className="search-wrapper">
-            <Form.Control
+            <input
               type="text"
               placeholder="What are you looking for?"
               className="search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Button type="submit" className="search-btn">
+            <button type="submit" className="search-btn">
               <FaSearch />
-            </Button>
+            </button>
           </div>
-        </Form>
+        </form>
 
         <div className="trending-topics mb-5">
           <span className="trending-label">Trending Topics:</span>
           {['All', 'Wedding', 'Matrimonial', 'Relationship'].map((topic, i) => (
-            <Button
+            <button
               key={i}
-              variant={searchTerm === topic || (topic === 'All' && !searchTerm) ? 'danger' : 'light'}
-              className="mx-1 my-1"
+              className={`btn mx-1 my-1 ${searchTerm === topic || (topic === 'All' && !searchTerm) ? 'btn-danger' : 'btn-light'}`}
               onClick={() => {
                 setSearchTerm(topic === 'All' ? '' : topic);
                 setCurrentPage(1);
               }}
             >
               {topic}
-            </Button>
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Featured Section */}
       {featuredBlogs.length > 0 && (
         <>
           <h4 className="section-heading">Featured</h4>
-          <Row className="mb-5">
+          <div className="row mb-5">
             {featuredBlogs.map((item, i) => (
-              <Col md={3} sm={6} key={i} className="mb-4">
+              <div className="col-md-3 col-sm-6 mb-4" key={i}>
                 <div 
                   className="featured-card" 
                   style={{ 
@@ -232,41 +252,44 @@ const BlogPage = () => {
                     <h5>{item.blog_name}</h5>
                   </div>
                 </div>
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </>
       )}
 
-      {/* Recent Articles */}
       <h4 className="section-heading">
         Recent <span className="highlight">Articles</span>
       </h4>
-      <Row>
+      <div className="row">
         {loading ? (
           <div className="text-center w-100 py-5">Loading...</div>
         ) : paginatedArticles.length > 0 ? (
           paginatedArticles.map((article, i) => (
-            <Col md={4} sm={6} key={i} className="mb-4">
-              <Card className="article-card">
-                <Card.Img 
-                  variant="top" 
+            <div className="col-md-4 col-sm-6" key={i}>
+              <div className="article-card">
+                <img 
                   src={`http://localhost/perfomdigi/hindu-humsfar-react/backend/${article.blog_img}`}
+                  alt={article.blog_name}
+                  className="card-img-top"
                 />
-                <Card.Body>
-                  <Card.Title>{article.blog_name}</Card.Title>
-                  <Card.Text className="text-muted small mb-2">
-                    {formatDate(article.created_at)}
-                  </Card.Text>
-                  <Card.Text className="text-truncate">
+                <div className="card-body">
+                  <h5 className="card-title">{article.blog_name}</h5>
+                  <small className="text-muted mb-2">
+                    {formatDate(article.blog_date || article.created_at)}
+                  </small>
+                  <p className="card-text">
                     {article.blog_desc.replace(/<[^>]*>/g, '').substring(0, 150)}...
-                  </Card.Text>
-                  <Button variant="outline-danger" size="sm" className="mt-auto align-self-start">
+                  </p>
+                  <Link 
+                    to={`/blog/${article.blog_id}`}
+                    className="btn btn-outline-danger read-more-btn"
+                  >
                     Read More
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
+                  </Link>
+                </div>
+              </div>
+            </div>
           ))
         ) : (
           <div className="no-blogs w-100">
@@ -274,29 +297,42 @@ const BlogPage = () => {
             <p>Try a different search term or check back later</p>
           </div>
         )}
-      </Row>
+      </div>
 
-      {/* Pagination - Only show if there are multiple pages */}
       {totalPages > 1 && (
-        <div className="d-flex justify-content-center mt-4">
-          <Pagination>
-            <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1} />
-            <Pagination.Prev onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1} />
+        <nav>
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => setCurrentPage(1)}>
+                &laquo;
+              </button>
+            </li>
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>
+                &lsaquo;
+              </button>
+            </li>
             {[...Array(totalPages)].map((_, i) => (
-              <Pagination.Item
-                key={i + 1}
-                active={currentPage === i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </Pagination.Item>
+              <li key={i + 1} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
+                  {i + 1}
+                </button>
+              </li>
             ))}
-            <Pagination.Next onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} />
-            <Pagination.Last onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} />
-          </Pagination>
-        </div>
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>
+                &rsaquo;
+              </button>
+            </li>
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => setCurrentPage(totalPages)}>
+                &raquo;
+              </button>
+            </li>
+          </ul>
+        </nav>
       )}
-    </Container>
+    </div>
   );
 };
 

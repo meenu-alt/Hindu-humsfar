@@ -1,5 +1,5 @@
 import React from 'react'
-import BlogDetail from './BlogPost';
+import BlogDetail from './BlogDetail';
 import Header from '../Header'
 import Footer from '../Footer'
 

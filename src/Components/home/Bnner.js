@@ -163,7 +163,7 @@ export default function Bnner() {
 
                         {/* Image load error message (debugging only) */}
                         {imageLoadError && (
-                          <div style={{ color: 'white', marginTop: '10px' }}>
+                          <div style={{ color: 'black', marginTop: '10px' }}>
                             Banner image failed to load
                           </div>
                         )}

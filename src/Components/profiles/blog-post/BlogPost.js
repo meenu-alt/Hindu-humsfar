@@ -3,26 +3,67 @@ import axios from 'axios';
 import { Container, Row, Col, Image, ListGroup } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
+
+// const BlogDetail = () => {
+//   const { id } = useParams();
+//   const [blog, setBlog] = useState(null);
+//   const [recentBlogs, setRecentBlogs] = useState([]);
+//   const [categories, setCategories] = useState([]);
+
+//   useEffect(() => {
+//     axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php?id=${id}`)
+//       .then(res => res.data && setBlog(res.data))
+//       .catch(err => console.error(err));
+
+//     axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`)
+//       .then(res => {
+//         if (Array.isArray(res.data)) {
+//           setRecentBlogs(res.data.slice(0, 5));
+//           const uniqueCategories = [...new Set(res.data.map(b => b.blog_keyword.split(',')[0]?.trim()))];
+//           setCategories(uniqueCategories);
+//         }
+//       }).catch(err => console.error(err));
+//   }, [id]);
 const BlogDetail = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php?id=${id}`)
-      .then(res => res.data && setBlog(res.data))
-      .catch(err => console.error(err));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`)
-      .then(res => {
-        if (Array.isArray(res.data)) {
-          setRecentBlogs(res.data.slice(0, 5));
-          const uniqueCategories = [...new Set(res.data.map(b => b.blog_keyword.split(',')[0]?.trim()))];
-          setCategories(uniqueCategories);
-        }
-      }).catch(err => console.error(err));
-  }, [id]);
+  
+useEffect(()=>{
+  setLoading(true);
+  setError(null);
+   
+  axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php?id=${id}`)
+    .then(res => {
+      if (res.data) {
+        setBlog(res.data);
+      } else {
+        setError('Blog not found.');
+      }
+    })
+    .catch(err => setError('Failed to load blog.'))
+    .finally(() => setLoading(false));
+
+  axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`)
+    .then(res => {
+      if (Array.isArray(res.data)) {
+        setRecentBlogs(res.data.slice(0, 5));
+        const uniqueCategories = [...new Set(res.data.map(b => b.blog_keyword.split(',')[0]?.trim()))];
+        setCategories(uniqueCategories);
+      }
+    })
+    .catch(err => console.error(err));
+}, [id]);
+
+if (loading) return <div className="text-center py-5">Loading blog post...</div>;
+if (error) return <div className="text-center py-5 text-danger">{error}</div>;
+if (!blog) return <div className="text-center py-5">No blog data available.</div>;
+
 
   if (!blog) return <div className="text-center py-5">Loading...</div>;
 

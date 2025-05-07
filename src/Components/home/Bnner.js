@@ -3,17 +3,41 @@ import axios from "axios";
 import { MdMan, MdWoman } from "react-icons/md";
 import "./home.css";
 import "./responsive.css";
+import Select from "react-select";
 
 export default function Bnner() {
+  // for form caste
+  // caste data
+  const [casteOptions, setCasteOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/caste.php"
+      )
+      .then((response) => {
+        setCasteOptions(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching caste data:", error);
+      });
+  }, []);
+  // caste data
+  // for form caste
+
+  //  bg image
   const [bgImage, setBgImage] = useState(null);
   const [imageLoadError, setImageLoadError] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/banner-image.php')
-      .then(response => {
+    axios
+      .get(
+        "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/banner-image.php"
+      )
+      .then((response) => {
         console.log("API Data:", response.data);
         if (response.data?.banner_image) {
-          // Verify the image exists before setting it  
+          // Verify the image exists before setting it
           const img = new Image();
           img.onload = () => {
             setBgImage(response.data.banner_image);
@@ -26,11 +50,12 @@ export default function Bnner() {
           img.src = response.data.banner_image;
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("API Error:", error);
         setImageLoadError(true);
       });
   }, []);
+  //  bg image
 
   const [formData, setFormData] = useState({
     gender: "male",
@@ -68,26 +93,28 @@ export default function Bnner() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch('https://hinduhumsafar.com/admin-mat/api.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await fetch(
+        "https://hinduhumsafar.com/admin-mat/api.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
       setApiData(data);
       console.log("Form submitted successfully:", data);
-      
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -101,28 +128,34 @@ export default function Bnner() {
           <div
             className="hom-head"
             style={{
-              backgroundImage: bgImage && !imageLoadError ? `url('${bgImage}')` : 'none',
+              backgroundImage:
+                bgImage && !imageLoadError ? `url('${bgImage}')` : "none",
               height: "700px",
               backgroundSize: "cover",
               backgroundPosition: "center",
-              backgroundColor: '#f5f5f5', // Fallback color
-              backgroundRepeat: 'no-repeat',
-              position: 'relative' // For overlay content
+              backgroundColor: "#f5f5f5", // Fallback color
+              backgroundRepeat: "no-repeat",
+              position: "relative", // For overlay content
             }}
           >
             {/* Dark overlay for better text visibility */}
             {bgImage && !imageLoadError && (
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'rgba(0,0,0,0.3)'
-              }}></div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                }}
+              ></div>
             )}
 
-            <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+            <div
+              className="container"
+              style={{ position: "relative", zIndex: 1 }}
+            >
               <div className="row">
                 <div className="hom-ban">
                   <div className="row">
@@ -132,44 +165,52 @@ export default function Bnner() {
                           Your Journey To Love Begins{" "}
                           <span style={{ color: "#F4B818" }}>here !</span>
                         </h1>
-                       
+
                         <h3 className="text-light ">
                           Connect With Genuine Matches Who <br /> Share Your{" "}
                           <span style={{ color: "#F4B818" }}>values</span> and{" "}
                           <span style={{ color: "#F4B818" }}>dreams.</span>
                         </h3>
-                        
+
                         {apiData && (
-                          <div className="api-response" style={{ 
-                            marginTop: '20px',
-                            padding: '10px',
-                            backgroundColor: 'rgba(255,255,255,0.2)',
-                            borderRadius: '5px'
-                          }}>
-                            <p style={{ color: '#fff' }}>Success! {apiData.message}</p>
+                          <div
+                            className="api-response"
+                            style={{
+                              marginTop: "20px",
+                              padding: "10px",
+                              backgroundColor: "rgba(255,255,255,0.2)",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <p style={{ color: "#fff" }}>
+                              Success! {apiData.message}
+                            </p>
                           </div>
                         )}
-                        
+
                         {error && (
-                          <div className="error-message" style={{ 
-                            marginTop: '20px',
-                            padding: '10px',
-                            backgroundColor: 'rgba(255,0,0,0.2)',
-                            borderRadius: '5px'
-                          }}>
-                            <p style={{ color: '#fff' }}>Error: {error}</p>
+                          <div
+                            className="error-message"
+                            style={{
+                              marginTop: "20px",
+                              padding: "10px",
+                              backgroundColor: "rgba(255,0,0,0.2)",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <p style={{ color: "#fff" }}>Error: {error}</p>
                           </div>
                         )}
 
                         {/* Image load error message (debugging only) */}
                         {imageLoadError && (
-                          <div style={{ color: 'black', marginTop: '10px' }}>
+                          <div style={{ color: "black", marginTop: "10px" }}>
                             Banner image failed to load
                           </div>
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                       <div className="wedding-form-container">
                         <div className="wedding-form">
@@ -179,7 +220,11 @@ export default function Bnner() {
                             <div className="form-section">
                               <label className="form-label">I'm A</label>
                               <div className="gender-options">
-                                <label className={`gender-option ${formData.gender === "male" ? "selected" : ""}`}>
+                                <label
+                                  className={`gender-option ${
+                                    formData.gender === "male" ? "selected" : ""
+                                  }`}
+                                >
                                   <input
                                     type="radio"
                                     name="gender"
@@ -190,7 +235,13 @@ export default function Bnner() {
                                   />
                                   <MdMan className="gender-icon" /> Male
                                 </label>
-                                <label className={`gender-option ${formData.gender === "female" ? "selected" : ""}`}>
+                                <label
+                                  className={`gender-option ${
+                                    formData.gender === "female"
+                                      ? "selected"
+                                      : ""
+                                  }`}
+                                >
                                   <input
                                     type="radio"
                                     name="gender"
@@ -206,9 +257,17 @@ export default function Bnner() {
 
                             {/* Looking For section */}
                             <div className="form-section">
-                              <label className="form-label">Looking For A</label>
+                              <label className="form-label">
+                                Looking For A
+                              </label>
                               <div className="gender-options">
-                                <label className={`gender-option ${formData.lookingFor === "male" ? "selected" : ""}`}>
+                                <label
+                                  className={`gender-option ${
+                                    formData.lookingFor === "male"
+                                      ? "selected"
+                                      : ""
+                                  }`}
+                                >
                                   <input
                                     type="radio"
                                     name="lookingFor"
@@ -219,7 +278,13 @@ export default function Bnner() {
                                   />
                                   <MdMan className="gender-icon" /> Male
                                 </label>
-                                <label className={`gender-option ${formData.lookingFor === "female" ? "selected" : ""}`}>
+                                <label
+                                  className={`gender-option ${
+                                    formData.lookingFor === "female"
+                                      ? "selected"
+                                      : ""
+                                  }`}
+                                >
                                   <input
                                     type="radio"
                                     name="lookingFor"
@@ -241,38 +306,47 @@ export default function Bnner() {
                                   name="religion"
                                   value={formData.religion}
                                   onChange={handleChange}
-                                  className={`form-select ${formData.religion ? "selected" : ""}`}
+                                  className={`form-select ${
+                                    formData.religion ? "selected" : ""
+                                  }`}
                                 >
                                   <option value="">Select Religion</option>
                                   <option value="Hindu">Hindu</option>
-                                  <option value="Muslim">Muslim</option>
-                                  <option value="Christian">Christian</option>
-                                  <option value="Sikh">Sikh</option>
                                 </select>
                               </div>
                               <div className="form-section">
                                 <label className="form-label">Caste</label>
-                                <select
+                                {/* <select
                                   name="caste"
                                   value={formData.caste}
                                   onChange={handleChange}
                                   className={`form-select ${
-                                    formData.caste && formData.caste !== "Select Caste"
+                                    formData.caste &&
+                                    formData.caste !== "Select Caste"
                                       ? "selected"
                                       : ""
                                   }`}
                                 >
-                                  <option value="Select Caste">Select Caste</option>
-                                  <option value="Brahmin">Brahmin</option>
-                                  <option value="Rajput">Rajput</option>
-                                  <option value="Yadav">Yadav</option>
-                                </select>
+                                  <option value="">Select Caste</option>
+                                  {casteOptions.map((caste, index) => (
+                                    <option key={index} value={caste}>
+                                      {caste}
+                                    </option>
+                                  ))}
+                                </select> */}
+                                <Select
+  options={casteOptions.map((caste) => ({ label: caste, value: caste }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => handleChange({ target: { name: "caste", value: selected.value } })}
+/>
                               </div>
                             </div>
 
                             {/* Age Range */}
                             <div className="form-section">
-                              <label className="form-label">Of Age Around</label>
+                              <label className="form-label">
+                                Of Age Around
+                              </label>
                               <div className="age-display">
                                 <span>{formData.minAge}</span>
                                 <span>{formData.maxAge}</span>
@@ -282,8 +356,13 @@ export default function Bnner() {
                                   <div
                                     className="age-slider-range"
                                     style={{
-                                      left: `${((formData.minAge - 20) / 50) * 100}%`,
-                                      right: `${100 - ((formData.maxAge - 20) / 50) * 100}%`,
+                                      left: `${
+                                        ((formData.minAge - 20) / 50) * 100
+                                      }%`,
+                                      right: `${
+                                        100 -
+                                        ((formData.maxAge - 20) / 50) * 100
+                                      }%`,
                                     }}
                                   ></div>
                                 </div>
@@ -314,12 +393,14 @@ export default function Bnner() {
                               </div>
                             </div>
 
-                            <button 
-                              type="submit" 
+                            <button
+                              type="submit"
                               className="submit-button"
                               disabled={loading}
                             >
-                              {loading ? 'Submitting...' : 'Start Your Search Today!'}
+                              {loading
+                                ? "Submitting..."
+                                : "Start Your Search Today!"}
                             </button>
                           </form>
                         </div>

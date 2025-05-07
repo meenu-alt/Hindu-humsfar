@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Select from "react-select";
+import axios from "axios";
 
 
 const EditProfileForm = () => {
+
+      // caste data
+      const [casteOptions, setCasteOptions] = useState([]);
+  
+      useEffect(() => {
+        axios
+          .get(
+            "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/caste.php"
+          )
+          .then((response) => {
+            setCasteOptions(response.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching caste data:", error);
+          });
+      }, []);
+      
+        const [formData, setFormData] = useState({
+          gender: "male",
+          lookingFor: "female",
+          religion: "Hindu",
+          caste: "Select Caste",
+          minAge: 25,
+          maxAge: 46,
+        });
+      // caste data
+
+
   return (
     <div className="container py-4">
         <style>
@@ -77,22 +107,26 @@ input::placeholder {
     <input type="text" className="form-control" placeholder="Religion *" required />
   </div>
   <div className="col-md-6">
-    <input type="text" className="form-control" placeholder="Caste *" />
+  <div className="form-group">
+                    <label className="form-label">Sub Caste</label>
+                    <Select
+  options={casteOptions.map((caste) => ({ label: caste, value: caste }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => ({ target: { name: "caste", value: selected.value } })}
+/>
+                  </div>
   </div>
   <div className="col-md-6">
     <input type="text" className="form-control" placeholder="Current Location *" required />
-  </div>
+  </div>  
   <div className="col-md-6">
     <input type="text" className="form-control" placeholder="Mother Tongue *" required />
   </div>
   <div className="col-md-6">
     <select className="form-select" required>
-      <option value="">Complexion *</option>
-      <option>Very Fair</option>
-      <option>Fair</option>
-      <option>Wheatish</option>
-      <option>Wheatish Brown</option>
-      <option>Dark</option>
+      <option value="">Manglik Dosha *</option>
+      <option>Yes</option>
+      <option>No</option>
     </select>
   </div>
   <div className="col-md-6">

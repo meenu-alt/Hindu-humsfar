@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import BlogSideBar from './BlogSidebar';
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -14,36 +15,31 @@ const BlogDetail = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
+  
+    axios
+      .get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php?blog_id=${id}`)
+      .then((res) => {
+        console.log('Fetched Blogs:', res.data);
 
-    // Fetch single blog
-    axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php?blog_id=${id}`)
-      .then(res => {
-        if (res.data) {
-          setBlog(res.data);
+        if (Array.isArray(res.data)) {
+          const matchedBlog = res.data.find((item) => item.blog_id === id);
+          if (matchedBlog) {
+            setBlog(matchedBlog);
+          } else {
+            setError('Blog not found.');
+          }
         } else {
-          setError('Blog not found.');
+          setError('Unexpected response format.');
         }
+        setLoading(false);
       })
       .catch((err) => {
         console.error('Error fetching blog:', err);
         setError('Failed to load blog.');
-      });
-
-    // Fetch all blogs for sidebar
-    axios.get(`http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/blog.php`)
-      .then(res => {
-        if (Array.isArray(res.data)) {
-          setRecentBlogs(res.data.slice(0, 5));
-          const uniqueCategories = [...new Set(res.data.map(b => b.blog_keyword.split(',')[0]?.trim()))];
-          setCategories(uniqueCategories.filter(Boolean));
-          setLoading(false);
-        }
-      })
-      .catch(err => {
-        console.error(err);
         setLoading(false);
       });
   }, [id]);
+  
 
   if (loading) return <div className="text-center py-5">Loading blog post...</div>;
   if (error) return <div className="text-center py-5 text-danger">{error}</div>;
@@ -72,7 +68,7 @@ const BlogDetail = () => {
           margin-bottom: 20px;
         }
         .blog-description {
-          font-size: 1.05rem;
+          font-size: 18px;
           line-height: 1.9;
           color: #333;
         }
@@ -83,14 +79,14 @@ const BlogDetail = () => {
           margin: 15px 0;
         }
         .sidebar-title {
-          font-size: 1.1rem;
+          font-size: 18px;
           font-weight: 600;
           margin-bottom: 15px;
           border-bottom: 1px solid #ccc;
           padding-bottom: 5px;
         }
         .category-item {
-          font-size: 0.95rem;
+          font-size: 18px;
           margin-bottom: 8px;
           display: flex;
           align-items: center;
@@ -122,12 +118,12 @@ const BlogDetail = () => {
           margin-right: 10px;
         }
         .recent-text {
-          font-size: 0.95rem;
+          font-size: 18px;
           font-weight: 600;
           color: #111;
         }
         .recent-date {
-          font-size: 0.8rem;
+          font-size: 18px;
           color: #999;
         }
         .sidebar {
@@ -155,7 +151,7 @@ const BlogDetail = () => {
           color: #e53d5c;
           padding: 3px 10px;
           border-radius: 15px;
-          font-size: 0.8rem;
+          font-size:18px;
           margin-left: 10px;
         }
         .list-group {
@@ -165,33 +161,8 @@ const BlogDetail = () => {
 
       <div className="row">
         <div className="col-lg-4 sidebar">
-          <div className="mb-5">
-            <div className="sidebar-title">Categories</div>
-            <div className="list-group">
-              {categories.map((cat, index) => (
-                <div className="category-item" key={index}>{cat}</div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="sidebar-title">Recent Posts</div>
-            {recentBlogs.map((item, idx) => (
-              <div key={idx} className="d-flex recent-post-wrapper">
-                <img
-                  src={`http://localhost/perfomdigi/hindu-humsfar-react/backend/${item.blog_img}`}
-                  alt="Recent"
-                  className="recent-thumbnail"
-                />
-                <div>
-                  <div className="recent-text">{item.blog_name}</div>
-                  <div className="recent-date">
-                    {item.blog_date ? new Date(item.blog_date).toDateString() : ''}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+           <BlogSideBar/>
+      
         </div>
 
         <div className="col-lg-8">

@@ -1,33 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+// import "../../../public/default.jpg"
 
 const RecentlyJoined = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/get-users.php')
-      .then(response => {
+    axios
+      .get(
+        "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/get-users.php"
+      )
+      .then((response) => {
         console.log("API Data:", response.data);
         setUsers(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("There was an error fetching users!", error);
       });
   }, []);
 
   // Function to calculate age from DOB
   const calculateAge = (dob) => {
-    if (!dob) return 'N/A';
+    if (!dob) return "N/A";
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
     return age;
@@ -35,8 +42,8 @@ const RecentlyJoined = () => {
 
   // Function to format height (assuming height is stored as "feet.inches" like "5.6")
   const formatHeight = (height) => {
-    if (!height) return 'N/A';
-    const parts = height.split('.');
+    if (!height) return "N/A";
+    const parts = height.split(".");
     if (parts.length === 2) {
       return `${parts[0]}'${parts[1]}"`;
     }
@@ -48,7 +55,8 @@ const RecentlyJoined = () => {
       <div className="content-wrapper">
         <div className="heading">
           <h3 className="text-center">
-            Recently Joined Members – <span style={{ color: "#E53D5C" }}>Start Connecting Now!</span>
+            Recently Joined Members –{" "}
+            <span style={{ color: "#E53D5C" }}>Start Connecting Now!</span>
           </h3>
         </div>
 
@@ -58,33 +66,37 @@ const RecentlyJoined = () => {
             spaceBetween={30}
             slidesPerView={2}
             navigation
-            pagination={{ clickable: true, dynamicBullets:true }}
+            pagination={{ clickable: true, dynamicBullets: true }}
             autoplay={{
               delay: 3000,
-              disableOnInteraction: false
+              disableOnInteraction: false,
             }}
             loop={true}
             loopedSlides={users.length}
             breakpoints={{
               640: {
                 slidesPerView: 2,
-                spaceBetween: 20
+                spaceBetween: 20,
               },
               768: {
                 slidesPerView: 3,
-                spaceBetween: 20
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 4,
-                spaceBetween: 30
-              }
+                spaceBetween: 30,
+              },
             }}
           >
             {users.map((member, index) => (
               <SwiperSlide key={index}>
                 <div className="member-card">
                   <img
-                    src={`http://localhost/perfomdigi/hindu-humsfar-react/backend/${member.image1}`}
+                    src={
+                      member.image1
+                        ? `http://localhost/perfomdigi/hindu-humsfar-react/backend/${member.image1}`
+                        : "/default.jpg"
+                    }
                     alt={member.name}
                     onError={(e) => {
                       e.target.src = "/default.jpg";
@@ -93,36 +105,52 @@ const RecentlyJoined = () => {
                   />
 
                   <div className="member-info">
-                  <h5>{member.name}</h5>
+                    <h5>{member.name}</h5>
                     <div className="member-id-gender">
                       <span className="member-id">
-                        {member.gender === 'male' ? 'M' : member.gender === 'female' ? 'F' : ''}
+                        {member.gender === "male"
+                          ? "M"
+                          : member.gender === "female"
+                          ? "F"
+                          : ""}
                       </span>
                       <span className="member-id">H{member.user_id}</span>
                     </div>
-                    
+
                     <div className="member-details">
                       <div className="detail-row">
                         <span className="detail-label">Age:</span>
-                        <span className="detail-value">{calculateAge(member.dob)} Yrs</span>
+                        <span className="detail-value">
+                          {calculateAge(member.dob)} Yrs
+                        </span>
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">Height:</span>
-                        <span className="detail-value">{formatHeight(member.height)}</span>
+                        <span className="detail-value">
+                          {formatHeight(member.height)}
+                        </span>
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">Gender:</span>
                         <span className="detail-value">
-                          {member.gender === 'male' ? 'Male' : member.gender === 'female' ? 'Female' : 'N/A'}
+                          {member.gender === "male"
+                            ? "Male"
+                            : member.gender === "female"
+                            ? "Female"
+                            : "N/A"}
                         </span>
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">Caste:</span>
-                        <span className="detail-value">{member.caste || 'N/A'}</span>
+                        <span className="detail-value">
+                          {member.caste || "N/A"}
+                        </span>
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">Location:</span>
-                        <span className="detail-value">{member.curr_location || member.country || 'India'}</span>
+                        <span className="detail-value">
+                          {member.curr_location || member.country || "India"}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -132,20 +160,23 @@ const RecentlyJoined = () => {
           </Swiper>
         </div>
 
-        <a href="#" className="view-more text-end">View More Profile</a>
+        <a href="#" className="view-more text-end">
+          View More Profile
+        </a>
       </div>
 
       <style jsx>{`
-        .member-info h5, .member-id{
-            color: white !important;
-            text-align: center;
-    }
-      .detail-label{
-            color: white !important;
-      }
-      .detail-value{
-            color: white !important;
-      }
+        .member-info h5,
+        .member-id {
+          color: white !important;
+          text-align: center;
+        }
+        .detail-label {
+          color: white !important;
+        }
+        .detail-value {
+          color: white !important;
+        }
         .recently-joined-container {
           padding: 60px 20px;
           background: #fff;
@@ -180,7 +211,7 @@ const RecentlyJoined = () => {
           display: block;
         }
         .member-info {
-          background: #E53D5C;
+          background: #e53d5c;
           color: white;
           padding: 15px;
         }
@@ -192,7 +223,7 @@ const RecentlyJoined = () => {
         }
         .gender-badge {
           background: white;
-          color: #E53D5C;
+          color: #e53d5c;
           border-radius: 3px;
           padding: 2px 5px;
           font-weight: bold;
@@ -210,7 +241,7 @@ const RecentlyJoined = () => {
           justify-content: space-between;
           margin-bottom: 5px;
           padding-bottom: 5px;
-          border-bottom: 1px solid rgba(255,255,255,0.1);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .detail-row:last-child {
           border-bottom: none;
@@ -226,7 +257,7 @@ const RecentlyJoined = () => {
         .view-more {
           display: block;
           text-align: center;
-          color: #E53D5C;
+          color: #e53d5c;
           font-size: 16px;
           text-decoration: none;
           font-weight: bold;
@@ -236,20 +267,23 @@ const RecentlyJoined = () => {
         .view-more:hover {
           color: #c2334d;
         }
-        .swiper-button-next, .swiper-button-prev {
-          color: #E53D5C;
+        .swiper-button-next,
+        .swiper-button-prev {
+          color: #e53d5c;
           width: 40px;
           height: 40px;
           background: white;
           border-radius: 50%;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           transition: all 0.3s ease;
         }
-        .swiper-button-next:hover, .swiper-button-prev:hover {
-          background: #E53D5C;
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+          background: #e53d5c;
           color: white;
         }
-        .swiper-button-next:after, .swiper-button-prev:after {
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
           font-size: 18px;
           font-weight: bold;
         }
@@ -260,13 +294,14 @@ const RecentlyJoined = () => {
           height: 12px;
         }
         .swiper-pagination-bullet-active {
-          background: #E53D5C;
+          background: #e53d5c;
         }
         @media (max-width: 768px) {
           .swiper-container {
             padding: 0 20px;
           }
-          .swiper-button-next, .swiper-button-prev {
+          .swiper-button-next,
+          .swiper-button-prev {
             display: none;
           }
         }

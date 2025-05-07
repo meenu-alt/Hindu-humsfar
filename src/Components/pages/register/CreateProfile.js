@@ -1,8 +1,47 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../../../Components/home/images/logo.png';
 import coupleImage from '../../../assets/images/couples/Vector.png';
+import axios from "axios";
+import Select from "react-select";
 
 const CreateProfile = () => {
+
+    // caste data
+    const [casteOptions, setCasteOptions] = useState([]);
+    const [gothraOptions, setGothraOptions] = useState([]);
+    const [citiesOptions, setCitiesOptions] = useState([]);
+    const [CountriesOptions, setCountriesOptions] = useState([]);
+    const [IncomeOptions, setIncomeOptions] = useState([]);
+    const [MessageOptions, setMessageOptions] = useState([]);
+  
+    useEffect(() => {
+      axios
+        .get(
+          "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/caste.php"
+        )
+        .then((response) => {
+          const data = response.data;
+          setCasteOptions(data.caste || []);
+        setGothraOptions(data.gothra || []);
+        setCityOptions(data.cities || []);
+        setCountriesOptions(data.countries || []);
+        setIncomeOptions(data.income || []);
+        setMessageOptions(data.message || []);
+        })
+        .catch((error) => {
+          console.error("Error fetching caste data:", error);
+        });
+    }, []);
+    
+      const [formData, setFormData] = useState({
+        gender: "male",
+        lookingFor: "female",
+        religion: "Hindu",
+        caste: "Select Caste",
+        minAge: 25,
+        maxAge: 46,
+      });
+    // caste data
   return (
 <>
 <div className='d-none d-lg-block'>
@@ -241,26 +280,31 @@ const CreateProfile = () => {
   />
 </div>
 
-<div className="form-row">
+<div className="form-row">  
   <div className="form-group">
     <label className="form-label">Sub Caste</label>
-    <select className="form-select">
-      <option>Not Filled</option>
-    </select>
+    <Select
+  options={casteOptions.map((caste) => ({ label: caste, value: caste }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => ({ target: { name: "caste", value: selected.valu/e } })}
+/>
   </div>
   <div className="form-group">
     <label className="form-label">Current Location *</label>
-    <select className="form-select">
-      <option>India</option>
-    </select>
+    <Select
+  options={CountriesOptions.map((Countries) => ({ label: Location, value: Country }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => ({ target: { name: "caste", value: selected.value } })}
+/>
   </div>
 </div>
 
 <div className="form-row">
   <div className="form-group">
-    <label className="form-label">Complexion</label>
+    <label className="form-label">Manglik Dosha</label>
     <select className="form-select">
-      <option>Not Filled</option>
+      <option>Yes</option>
+      <option>No</option>
     </select>
   </div>
   <div className="form-group">
@@ -417,19 +461,19 @@ const CreateProfile = () => {
 <div className="form-row">
   <div className="form-group">
     <label className="form-label">Gothra</label>
-    <select className="form-select">
-      <option>Not Filled</option>
-      <option>Gothra 1</option>
-      <option>Gothra 2</option>
-    </select>
+    <Select
+  options={gothraOptions.map((Countries) => ({ label: Gothra, value: gothra }))}
+  value={{ label: formData.gothra, value: formData.gothra }}
+  onChange={(selected) => ({ target: { name: "gothra", value: selected.value } })}
+/>
   </div>
   <div className="form-group">
     <label className="form-label">Gothra (Maternal)</label>
-    <select className="form-select">
-      <option>Not Filled</option>
-      <option>Maternal Gothra 1</option>
-      <option>Maternal Gothra 2</option>
-    </select>
+    <Select
+  options={gothraOptions.map((Countries) => ({ label: Gothra, value: gothra }))}
+  value={{ label: formData.gothra, value: formData.gothra }}
+  onChange={(selected) => ({ target: { name: "gothra", value: selected.value } })}
+/>
   </div>
 </div>
 
@@ -559,9 +603,11 @@ const CreateProfile = () => {
                 <div className="col-md-6 col-12">
                   <div className="form-group">
                     <label className="form-label">Sub Caste</label>
-                    <select className="form-select">
-                      <option>Not Filled</option>
-                    </select>
+                    <Select
+  options={casteOptions.map((caste) => ({ label: caste, value: caste }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => ({ target: { name: "caste", value: selected.value } })}
+/>
                   </div>
                 </div>
                 <div className="col-md-6 col-12">
@@ -577,9 +623,10 @@ const CreateProfile = () => {
               <div className="row">
                 <div className="col-md-6 col-12">
                   <div className="form-group">
-                    <label className="form-label">Complexion</label>
+                    <label className="form-label">Manglik Dosha</label>
                     <select className="form-select">
-                      <option>Not Filled</option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </select>
                   </div>
                 </div>
@@ -1103,9 +1150,11 @@ const CreateProfile = () => {
                 <div className="col-md-6 col-12">
                   <div className="form-group">
                     <label className="form-label">Sub Caste</label>
-                    <select className="form-select">
-                      <option>Not Filled</option>
-                    </select>
+                    <Select
+  options={casteOptions.map((caste) => ({ label: caste, value: caste }))}
+  value={{ label: formData.caste, value: formData.caste }}
+  onChange={(selected) => ({ target: { name: "caste", value: selected.value } })}
+/>
                   </div>
                 </div>
                 <div className="col-md-6 col-12">
@@ -1121,9 +1170,10 @@ const CreateProfile = () => {
               <div className="row">
                 <div className="col-md-6 col-12">
                   <div className="form-group">
-                    <label className="form-label">Complexion</label>
+                    <label className="form-label">Manglik Dosha</label>
                     <select className="form-select">
-                      <option>Not Filled</option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </select>
                   </div>
                 </div>

@@ -266,3 +266,15 @@ border-radius: 25px;
     transform: translate3d(0, 0, 0);
     z-index: 10;
 }
+.css-13cymwt-control:hover {
+    border-color:#e53d5c !important;
+   
+}
+.css-13cymwt-control {
+    border-color:#e53d5c !important;
+   
+}
+.css-13cymwt-control:active {
+    border-color:#e53d5c !important;
+   
+}

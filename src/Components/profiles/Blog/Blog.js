@@ -249,8 +249,14 @@ const BlogPage = () => {
                 >
                   <div className="overlay">
                     <span className="tag">{item.blog_keyword.split(',')[0]?.trim() || 'Blog'}</span>
-                    <h5>{item.blog_name}</h5>
+                    <h5 className='text-light'> {item.blog_name}</h5>
                   </div>
+                  <Link 
+                    to={`/blog/${item.blog_id}`}
+                    className="btn btn-outline-danger read-more-btn"
+                  >
+                    Read More
+                  </Link>
                 </div>
               </div>
             ))}

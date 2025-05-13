@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -15,6 +17,7 @@ import MyProfileImage from './myprofile.png';
 
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -374,7 +377,8 @@ const ProfilePage = () => {
           >
             {users.map((member, index) => (
               <SwiperSlide key={index}>
-                <div className="member-card">
+                <div className="member-card" onClick={ ()=> navigate(`/profile/${member.user_id}`) }
+                  style={{cursor:"pointer"}}>
                   <img
                     src={`http://localhost/perfomdigi/hindu-humsfar-react/backend/${member.image1}`}
                     alt={member.name}

@@ -1,7 +1,25 @@
-import React from 'react';
+import {React, useEffect, useState} from 'react';
 import { Container } from 'react-bootstrap';
+import axios from 'axios';
 
 const TermsOfUse = () => {
+
+  const [termsofuse, setTermsofuse] = useState("");
+  useEffect(() => {
+    axios 
+    .get("http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/terms-of-use.php")
+    .then((response)=>{
+      if (response.data.length > 0) {
+        setTermsofuse(response.data[0].term_of_use_desc);
+      }
+    })
+    .catch((error)=> {
+      console.log("Error fetching data:", error)
+    });
+  }, []);
+
+
+
   return (
     <Container className="terms-container">
       <div className="terms-header">
@@ -19,6 +37,13 @@ const TermsOfUse = () => {
       </div>
       <style>
         {`
+          h4{
+        font-size: 18px !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    margin-bottom: 15px !important;
+    text-transform: uppercase !important;
+    }
         ol li {
             list-style: decimal;
             }
@@ -131,72 +156,8 @@ const TermsOfUse = () => {
   }
 }`}
       </style>
-      <div className="terms-content">
-        <div className="section">
-          <h2>ELIGIBILITY</h2>
-          <p>
-            Users must be at least 21 years of age to create an account on Hindu Humsafar and for using the service. 
-            Any one if eligible can create an account and use the services.
-          </p>
-        </div>
+      <div className="terms-content" dangerouslySetInnerHTML={{__html:termsofuse}} ></div>
         
-        <div className="section">
-          <h2>ACCOUNT TERMINATION</h2>
-          <p>
-            Hindu Humsafar is continually endeavouring to enhance the services and present to you extra usefulness that 
-            you will discover connecting with your match. This implies we may include new item highlights or improvements 
-            every once in a while and expel a few highlights, and if these activities don't tangibly influence your rights 
-            or commitments, we may even suspend the service altogether if we found uncontrollable issues at hand, for example 
-            wellbeing or security concerns keep us from doing as such.
-          </p>
-          
-          <p>
-            Users may end up his records whenever for any reason, by adhering to the directions in 'settings' in the service. 
-            Hindu Humsafar may end the user record whenever without notice on the off chance that the user has damaged the 
-            criteria and policy. Hindu Humsafar cannot be held liable for actions by its members which are illegal, or which 
-            incur criminal penalties, including but not limited to the following:
-          </p>
-          
-          <ol>
-            <li>All types of scams.</li>
-            <li>Prostitution.</li>
-            <li>Business by any third party.</li>
-            <li>Identity theft.</li>
-            <li>Gambling.</li>
-            <li>Pornographic materials.</li>
-            <li>Objectionable messages sent to matches or other users.</li>
-          </ol>
-          
-          <p>
-            Hindu Humsafar cannot be held responsible for any failure, interruption or poor performance of the user's internet 
-            provider services or any case/situation beyond Hindu Humsafar control. In the event of any misuse or abuse of Hindu 
-            Humsafar application Hindu Humsafar reserves all the rights to block or cancel the users account immediately without 
-            user's permission. Hindu Humsafar is the sole authority for interpretation of these terms. Hindu Humsafar shall not 
-            be liable for any loss or damage by uneventful happenings. Hindu Humsafar shall not be liable for any indirect, 
-            incidental or consequential damages arising at or in connection with the application. Hindu Humsafar will provide its 
-            best possible efforts to secure user's data but ultimate risk is with the person who ever uses the application services.
-          </p>
-          
-          <p>
-            Though Hindu Humsafar strives to encourage a respectful user experience through features like the double opt-in that 
-            allows users to communicate via messaging if they have both indicated interest in one another, Hindu Humsafar is not 
-            responsible for the conduct of any user on or off the service. Immediately after registration you are agreed to use 
-            caution in all interaction with other users, particularly if you decide to communicate off the service or meet the person. 
-            Be safe.
-          </p>
-        </div>
-        
-        <div className="section">
-          <h2>REFUND AND CANCELLATION POLICY</h2>
-          
-          <h3>Minimum Registration charges starts from Rs.99/-</h3>
-          <p>
-            Hindu Humsafar.com is committed to providing a secure and successful matrimony experience for its users. 
-            As part of our commitment, we have established a non-cancellation refund policy to ensure transparency and 
-            fairness in our refund process.
-          </p>
-        </div>
-      </div>
     </Container>
   );
 };

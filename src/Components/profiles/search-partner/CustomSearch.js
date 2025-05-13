@@ -1,38 +1,99 @@
-import React, { useState } from "react";
-import { FaIdCard } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaIdCard, FaSearch, FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PartnerSearch = () => {
-  const [lookingFor, setLookingFor] = useState("");
-  const [minAge, setMinAge] = useState("");
-  const [maxAge, setMaxAge] = useState("");
-  const [minHeight, setMinHeight] = useState("");
-  const [religion, setReligion] = useState("");
-  const [caste, setCaste] = useState("");
+  // Form state
+  const [searchCriteria, setSearchCriteria] = useState({
+    lookingFor: "",
+    minAge: "18",
+    maxAge: "45",
+    minHeight: "",
+    religion: "Hindu",
+    caste: ""
+  });
+
+  // Results and UI state
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchError, setSearchError] = useState(null);
+  const [casteOptions, setCasteOptions] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Fetch caste and religion options on component mount
+  useEffect(() => {
+    const fetchOptions = async () => {
+      setIsFetching(true);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL || "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api"}/caste.php`
+        );
 
-    const payload = {
-      lookingFor,
-      caste,
-      // You can add minAge, maxAge, minHeight, religion when your backend supports it
+        if (response.data.success) {
+          setCasteOptions(response.data.data.caste || []);
+          setFetchError(null);
+        } else {
+          setFetchError("Failed to load options");
+        }
+      } catch (error) {
+        console.error("Failed to fetch options:", error);
+        setFetchError("Network error. Please check your connection.");
+        setCasteOptions([]);
+      } finally {
+        setIsFetching(false);
+      }
     };
 
-    try {
-      const response = await fetch("http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/custom-search.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+    fetchOptions();
+  }, []);
 
-      const data = await response.json();
-      setResults(data);
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSearchCriteria(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Validate form before submission
+  const validateForm = () => {
+    if (parseInt(searchCriteria.minAge) > parseInt(searchCriteria.maxAge)) {
+      setSearchError("Minimum age cannot be greater than maximum age");
+      return false;
+    }
+    setSearchError(null);
+    return true;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL || "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api"}/custom-search.php`,
+        searchCriteria,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      setResults(response.data || []);
+      setSearchError(null);
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      console.error("Search failed:", error);
+      setSearchError("Failed to perform search. Please try again.");
+      setResults([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,10 +116,21 @@ const PartnerSearch = () => {
           <h2>
             Search <span className="highlight">For Your Partner</span>
           </h2>
+          
+          {/* Error messages */}
+          {searchError && <div className="alert alert-danger">{searchError}</div>}
+          {fetchError && <div className="alert alert-warning">{fetchError}</div>}
+          
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Looking For *</label>
-              <select name="lookingFor" value={lookingFor} onChange={(e) => setLookingFor(e.target.value)} required>
+              <select 
+                name="lookingFor" 
+                value={searchCriteria.lookingFor} 
+                onChange={handleChange} 
+                required
+                disabled={isFetching}
+              >
                 <option value="">Select</option>
                 <option value="Male">Groom</option>
                 <option value="Female">Bride</option>
@@ -68,7 +140,13 @@ const PartnerSearch = () => {
             <div className="form-row">
               <div className="form-group">
                 <label>Min Age *</label>
-                <select value={minAge} onChange={(e) => setMinAge(e.target.value)} required>
+                <select 
+                  name="minAge"
+                  value={searchCriteria.minAge} 
+                  onChange={handleChange} 
+                  required
+                  disabled={isFetching}
+                >
                   {Array.from({ length: 32 }, (_, i) => (
                     <option key={i + 18} value={i + 18}>
                       {i + 18}
@@ -78,7 +156,13 @@ const PartnerSearch = () => {
               </div>
               <div className="form-group">
                 <label>Max Age *</label>
-                <select value={maxAge} onChange={(e) => setMaxAge(e.target.value)} required>
+                <select 
+                  name="maxAge"
+                  value={searchCriteria.maxAge} 
+                  onChange={handleChange} 
+                  required
+                  disabled={isFetching}
+                >
                   {Array.from({ length: 32 }, (_, i) => (
                     <option key={i + 18} value={i + 18}>
                       {i + 18}
@@ -88,42 +172,62 @@ const PartnerSearch = () => {
               </div>
               <div className="form-group">
                 <label>Min Height *</label>
-                <select value={minHeight} onChange={(e) => setMinHeight(e.target.value)} required>
+                <select 
+                  name="minHeight"
+                  value={searchCriteria.minHeight} 
+                  onChange={handleChange} 
+                  required
+                  disabled={isFetching}
+                >
                   <option value="">Select</option>
-                  <option value="4'8">4'8</option>
-                  <option value="4'9">4'9</option>
-                  <option value="5'0">5'0</option>
-                  <option value="5'5">5'5</option>
-                  <option value="5'8">5'8 (1.73 Mts)</option>
+                  <option value="4.8">4'8</option>
+                  <option value="4.9">4'9</option>
+                  <option value="5.0">5'0</option>
+                  <option value="5.5">5'5</option>
+                  <option value="5.8">5'8 (1.73 Mts)</option>
                 </select>
               </div>
             </div>
 
             <div className="form-group">
               <label>Religion *</label>
-              <select value={religion} onChange={(e) => setReligion(e.target.value)} required>
-                <option value="">Select</option>
-                <option value="Hindu">Hindu</option>
-                <option value="Muslim">Muslim</option>
-                <option value="Christian">Christian</option>
-              </select>
+              <input
+                type="text"
+                name="religion"
+                value="Hindu"
+                disabled
+              />
             </div>
 
             <div className="form-group">
               <label>Caste *</label>
-              <select value={caste} onChange={(e) => setCaste(e.target.value)} required>
-                <option value="">Select Caste</option>
-                <option value="General">General</option>
-                <option value="OBC">OBC</option>
-                <option value="SC/ST">SC/ST</option>
-                <option value="Rajput">Rajput</option>
-                <option value="Brahmin">Brahmin</option>
-                <option value="Jat">Jat</option>
-              </select>
+              {isFetching ? (
+                <select disabled>
+                  <option>Loading castes...</option>
+                </select>
+              ) : (
+                <select 
+                  name="caste"
+                  value={searchCriteria.caste} 
+                  onChange={handleChange} 
+                  required
+                  disabled={isFetching}
+                >
+                  <option value="">Select Caste</option>
+                  {casteOptions.map((item, index) => (
+                    <option key={index} value={item}>{item}</option>
+                  ))}
+                </select>
+              )}
             </div>
 
-            <button type="submit" className="search-btn search-btn-full">
-              Search
+            <button 
+              type="submit" 
+              className="search-btn search-btn-full"
+              disabled={loading || isFetching}
+            >
+              {loading ? <FaSpinner className="spinner" /> : <FaSearch />}
+              {loading ? "Searching..." : "Search"}
             </button>
 
             <div className="divider">Or</div>
@@ -135,18 +239,41 @@ const PartnerSearch = () => {
             </Link>
           </form>
 
-          {/* 🔍 Results Section */}
-          {results.length > 0 && (
-            <div className="search-results mt-4">
-              <h4>Search Results</h4>
-              <ul>
-                {results.map((user) => (
-                  <li key={user.id}>
-                    {user.name} - {user.gender} - {user.caste}
-                  </li>
-                ))}
-              </ul>
+          {/* Results Section */}
+          {loading ? (
+            <div className="text-center mt-4">
+              <FaSpinner className="spinner" /> Loading results...
             </div>
+          ) : results.length > 0 ? (
+            <div className="search-results mt-4">
+              <h4>Search Results ({results.length})</h4>
+              <div className="row">
+                {results.map((user) => (
+                  <div key={user.id} className="col-md-4 mb-4">
+                    <div className="card profile-card">
+                      <div className="card-body">
+                        <h5 className="card-title">{user.name}</h5>
+                        <p className="card-text">
+                          <strong>Gender:</strong> {user.gender}<br />
+                          <strong>Age:</strong> {user.age}<br />
+                          <strong>Caste:</strong> {user.caste}<br />
+                          <strong>Height:</strong> {user.height}
+                        </p>
+                        <Link to={`/profile/${user.id}`} className="btn btn-primary">
+                          View Profile
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            !loading && results.length === 0 && (
+              <div className="alert alert-info mt-4">
+                No results found. Try different search criteria.
+              </div>
+            )
           )}
         </div>
       </div>

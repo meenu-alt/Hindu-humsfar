@@ -297,7 +297,7 @@ const RecentlyJoined = () => {
           background: #e53d5c;
         }
         @media (max-width: 768px) {
-          .swiper-container {
+          .swiper-container { 
             padding: 0 20px;
           }
           .swiper-button-next,

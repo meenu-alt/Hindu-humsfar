@@ -16,7 +16,14 @@ export default function Bnner() {
         "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/caste.php"
       )
       .then((response) => {
-        setCasteOptions(response.data);
+        if (Array.isArray(response.data)) {
+          setCasteOptions(response.data);
+        } else {
+          console.error("Unexpected caste data format:", response.data);
+          setCasteOptions([]);
+        }
+        
+
       })
       .catch((error) => {
         console.error("Error fetching caste data:", error);

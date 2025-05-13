@@ -33,6 +33,7 @@ import Links from './links-delete/Links.js'
 import BlogPage from './Components/profiles/Blog/index.js'
 import BlogDetail from './Components/profiles/blog-post/index.js'
 import PricingPlanCard from './Components/profiles/pricing/index.js'
+import CityTesting from './Components/home/CityTesting.js'
 
 function App() {
   return (
@@ -58,7 +59,7 @@ function App() {
     <Route path="recently-joined-matches/" element={ <FilterCardGallery/>  } />
     <Route path="search-id" element={ <SearchById/>  } />
     <Route path="custom-search" element={ <CustomSearch/>  } />
-    <Route path="profile-page" element={ <ProfilePage/>  } />
+    <Route path="/profile-page/:id" element={ <ProfilePage/>  } />
     <Route path="my-profile" element={ <MyProfilePage/>  } />
     <Route path="contact-us" element={ <Contact/>  } />
     <Route path="report-misuse-form" element={ <ReportMisuseForm/>  } />
@@ -76,6 +77,7 @@ function App() {
     <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:id" element={<BlogDetail />} />
     <Route path="pricing" element={ <PricingPlanCard/>  } />
+    <Route path="city-testing" element={ <CityTesting/>  } />
     </Routes>
     {/* <Footer/> */}
    </Router>

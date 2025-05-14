@@ -31,7 +31,11 @@ export default function Header() {
                   {/* Desktop buttons - hidden on mobile */}
                   <div className='button-place d-none d-md-block'>
                     <div className='button-container'>
-                      <button type="button" className='btn-signup me-2'>Sign Up</button>
+                  {/* <link to="./sing-up">  <button type="button" className='btn-signup me-2'>   Sign Up </button> </link> */}
+                  
+<Link to="/sing-up">
+  <button type="button" className="btn-signup me-2">Sign Up</button>
+</Link>
                       <button type="button" className='btn-login'>Login</button>
                       {/* <button type="button" className='btn btn-signup me-2'>Sign Up</button>
                       <button type="button" className='btn btn-login'>Login</button> */}
@@ -57,7 +61,7 @@ export default function Header() {
                   <div className='col-12 d-md-none mt-3'>
                     <div className='mobile-menu bg-light p-3 rounded'>
                       <div className='d-flex gap-5'>
-                       <link to="/sing-up"><button type="button" className='btn btn-signup'>Sign Upp</button></link> 
+                       <button type="button" className='btn btn-signup'>Sign Upp</button>
                         <button type="button" className='btn btn-login'>Login</button>
                       </div>
                     </div>

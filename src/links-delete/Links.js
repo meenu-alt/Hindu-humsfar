@@ -30,6 +30,8 @@ const Links = () => {
     { path: "/how-to-use", label: "How to use" },
     { path: "/blog", label: "blog" },
     { path: "/blog-post", label: "blog-post" },
+    { path: "/send-otp", label: "send-otp" },
+    { path: "/otp", label: "otp" },
   ];
 
 

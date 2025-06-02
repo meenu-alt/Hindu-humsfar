@@ -33,10 +33,13 @@ export default function Header() {
                     <div className='button-container'>
                   {/* <link to="./sing-up">  <button type="button" className='btn-signup me-2'>   Sign Up </button> </link> */}
                   
-<Link to="/sing-up">
+<Link to="sing-up">
   <button type="button" className="btn-signup me-2">Sign Up</button>
 </Link>
-                      <button type="button" className='btn-login'>Login</button>
+<Link to="login">
+   <button type="button" className='btn-login'>Login</button>
+</Link>
+                      {/* <button type="button" className='btn-login'>Login</button> */}
                       {/* <button type="button" className='btn btn-signup me-2'>Sign Up</button>
                       <button type="button" className='btn btn-login'>Login</button> */}
                     </div>

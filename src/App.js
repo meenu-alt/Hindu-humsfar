@@ -34,6 +34,8 @@ import BlogPage from './Components/profiles/Blog/index.js'
 import BlogDetail from './Components/profiles/blog-post/index.js'
 import PricingPlanCard from './Components/profiles/pricing/index.js'
 import CityTesting from './Components/home/CityTesting.js'
+import OTP from './Components/pages/register/otp.js'
+import SendOtp from './Components/pages/register/sendotp.js'
 
 function App() {
   return (
@@ -78,6 +80,8 @@ function App() {
         <Route path="blog/:id" element={<BlogDetail />} />
     <Route path="pricing" element={ <PricingPlanCard/>  } />
     <Route path="city-testing" element={ <CityTesting/>  } />
+    <Route path="otp" element={ <OTP/>  } />
+    <Route path="send-otp" element={ <SendOtp/>  } />
     </Routes>
     {/* <Footer/> */}
    </Router>

@@ -29,7 +29,7 @@ const SignupForm = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [generalError, setGeneralError] = useState(''); // For form-level non-field specific errors
+  const [generalError, setGeneralError] = useState(''); 
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -37,7 +37,7 @@ const SignupForm = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    // Clear specific error when user types
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: null }));
     }
@@ -79,7 +79,7 @@ const SignupForm = () => {
       return false;
     }
     
-    // Optional: Client-side pre-check for email uniqueness (ensure API_BASE_URL and endpoint are correct)
+
     // try {
     //   const emailCheckResponse = await axios.post(`${API_BASE_URL}/check-email`, { email: formData.email });
     //   if (emailCheckResponse.data && !emailCheckResponse.data.status) { // Assuming backend returns {status: false, message: '...'} if taken
@@ -93,7 +93,7 @@ const SignupForm = () => {
     //   // Depending on strictness, you might return false or allow proceeding, letting backend handle final check
     // }
 
-    return true; // All client-side validations passed
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -108,9 +108,8 @@ const SignupForm = () => {
 
     setIsSubmitting(true);
     try {
-      // This endpoint should save data and trigger OTP sending on the backend
-      // The backend should handle uniqueness checks for email and mobile.
-      const response = await axios.post(`${API_BASE_URL}/initiate`, formData); // Example endpoint: /api/register/initiate
+      
+      const response = await axios.post(`${API_BASE_URL}/initiate`, formData); 
 
       if (response.data && response.data.status) {
         // Navigate to OTP verification page, passing mobile number (and email if needed)

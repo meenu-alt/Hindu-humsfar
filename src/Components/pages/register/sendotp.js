@@ -2,6 +2,9 @@ import React from 'react';
 import logo from '../../../Components/home/images/logo.png';
 import bgImage from '../../../assets/images/couples/Vector.png';
 
+const API_BASE_URL = 'http://localhost/perfomdigi/hindu-humsfar-react/backend/'; 
+
+
 const SendOtp = () => {
   return (
     <div className="reset-container">

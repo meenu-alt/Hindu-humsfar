@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'http://localhost/perfomdigi/hindu-humsfar-react/backend/index.php';

@@ -18,7 +18,7 @@ const ForgotPassword = () => {
           </form>
 
           <p className="remember-link">
-            Remembered your password? <a href="#">Log in</a>
+            Remembered your password? <a href="login">Log in</a>
           </p>
         </div>
 

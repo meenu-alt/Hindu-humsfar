@@ -12,6 +12,7 @@ export default function Bnner() {
 
   useEffect(() => {
     axios
+      
       .get(
         "http://localhost/perfomdigi/hindu-humsfar-react/backend/admin-mat/api/caste.php"
       )

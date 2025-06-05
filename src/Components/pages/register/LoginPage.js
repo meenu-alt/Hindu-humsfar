@@ -85,7 +85,7 @@ const LoginPage = () => {
                 <label className="remember-me">
                   <input type="checkbox" /> Remember me
                 </label>
-                <a href="#" className="forgot-password">Forgot Password?</a>
+                <a href="fogot-password" className="forgot-password">Forgot Password?</a>
               </div>
 
               <button type="submit" className="login-btn" disabled={loading}>
@@ -94,7 +94,7 @@ const LoginPage = () => {
             </form>
 
             <p className="create-account">
-              Don't have an account? <a href="#">Create account</a>
+              Don't have an account? <a href="create-account">Create account</a>
             </p>
           </div>
 

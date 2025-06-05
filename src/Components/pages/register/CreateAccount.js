@@ -46,7 +46,7 @@ const SignupForm = () => {
         </form>
 
         <p className="login-text">
-          Already have an account? <a href="#">Log in</a>
+          Already have an account? <a href="login">Log in</a>
         </p>
       </div>
 
